@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: win95
+spec:
+  selector:
+    matchLabels:
+      app: win95
+  template:
+    metadata:
+      labels:
+        app: win95
+    spec:
+      containers:
+      - name: win95
+        image: tdwin/win95
+        ports:
+        - containerPort: 6080
+        envFrom:
+          - secretRef:
+              name: win95-secret
+        resources:
+          limits:
+            cpu: 1
+            memory: 2Gi
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: win95
+spec:
+  selector:
+    app: win95
+  ports:
+  - name: vnc
+    port: 6080
+    targetPort: 6080
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: win95-ingress
+  labels:
+    app: win95
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - backend:
+          serviceName: win95
+          servicePort: 6080
+        path: /
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: win95-secret
+  namespace: default
+type: Opaque
+data:
+  VNC_PWD: c2VjcmV0

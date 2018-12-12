@@ -1,0 +1,8 @@
+apiVersion: win95.xmas.sap/v1alpha1
+kind: Win95
+metadata:
+  name: example-win95
+spec:
+  username: user
+  password: secret
+  domain: example.com

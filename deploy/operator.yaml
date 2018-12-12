@@ -15,8 +15,7 @@ spec:
       serviceAccountName: win95-operator
       containers:
         - name: win95-operator
-          # Replace this with the built image name
-          image: REPLACE_IMAGE
+          image: tdwin/win95operator
           ports:
           - containerPort: 60000
             name: metrics

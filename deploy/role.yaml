@@ -1,6 +1,7 @@
-kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
 metadata:
+  creationTimestamp: null
   name: win95-operator
 rules:
 - apiGroups:
@@ -14,7 +15,7 @@ rules:
   - configmaps
   - secrets
   verbs:
-  - "*"
+  - '*'
 - apiGroups:
   - ""
   resources:
@@ -29,11 +30,23 @@ rules:
   - replicasets
   - statefulsets
   verbs:
-  - "*"
+  - '*'
+- apiGroups:
+  - extensions
+  resources:
+  - ingresses
+  verbs:
+  - '*'
 - apiGroups:
   - monitoring.coreos.com
   resources:
   - servicemonitors
   verbs:
-  - "get"
-  - "create"
+  - get
+  - create
+- apiGroups:
+  - win95.xmas.sap
+  resources:
+  - '*'
+  verbs:
+  - '*'
